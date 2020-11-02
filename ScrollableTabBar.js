@@ -36,11 +36,11 @@ const ScrollableTabBar = createReactClass({
   getDefaultProps() {
     return {
       scrollOffset: 52,
-      activeTextColor: 'navy',
-      inactiveTextColor: 'black',
+      activeTextColor: 'black',
+      inactiveTextColor: '#8C8C8C',
       backgroundColor: null,
       style: {},
-      tabStyle: {},
+      tabStyle: {height:40},
       tabsContainerStyle: {},
       underlineStyle: {},
     };
@@ -116,11 +116,11 @@ const ScrollableTabBar = createReactClass({
       const newLineLeft = (pageOffset * nextTabLeft + (1 - pageOffset) * lineLeft);
       const newLineRight = (pageOffset * nextTabRight + (1 - pageOffset) * lineRight);
 
-      this.state._leftTabUnderline.setValue(newLineLeft);
-      this.state._widthTabUnderline.setValue(newLineRight - newLineLeft);
+      this.state._leftTabUnderline.setValue(newLineLeft + 16);
+      this.state._widthTabUnderline.setValue(newLineRight - newLineLeft-32);
     } else {
-      this.state._leftTabUnderline.setValue(lineLeft);
-      this.state._widthTabUnderline.setValue(lineRight - lineLeft);
+      this.state._leftTabUnderline.setValue(lineLeft + 16);
+      this.state._widthTabUnderline.setValue(lineRight - lineLeft -32);
     }
   },
 
@@ -155,7 +155,8 @@ const ScrollableTabBar = createReactClass({
     const tabUnderlineStyle = {
       position: 'absolute',
       height: 4,
-      backgroundColor: 'navy',
+      backgroundColor: "#189723",
+      borderRadius: 4,
       bottom: 0,
     };
 
@@ -163,11 +164,9 @@ const ScrollableTabBar = createReactClass({
       left: this.state._leftTabUnderline,
       width: this.state._widthTabUnderline,
     };
-
     const {
       onScroll,
-    } = this.props;
-
+    } = this.props
     return <View
       style={[styles.container, {backgroundColor: this.props.backgroundColor, }, this.props.style, ]}
       onLayout={this.onContainerLayout}
@@ -181,7 +180,6 @@ const ScrollableTabBar = createReactClass({
         bounces={false}
         scrollsToTop={false}
         onScroll={onScroll}
-        scrollEventThrottle={16}
       >
         <View
           style={[styles.tabs, {width: this.state._containerWidth, }, this.props.tabsContainerStyle, ]}
@@ -226,22 +224,23 @@ module.exports = ScrollableTabBar;
 
 const styles = StyleSheet.create({
   tab: {
-    height: 49,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   container: {
-    height: 50,
+    height: 40,
     borderWidth: 1,
     borderTopWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
     borderColor: '#ccc',
+    borderBottomWidth: 0
   },
   tabs: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+
   },
 });
